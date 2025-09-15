@@ -2,30 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Archero 2 Offer Calculator</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
     <h1>Archero 2 Offer Calculator</h1>
-    <form id="offer-form">
-      <div class="input-group">
-        <label>Gems</label><input type="number" id="gems" value="0" />
-      </div>
-      <div class="input-group">
-        <label>Gold</label><input type="number" id="gold" value="0" />
-      </div>
-      <div class="input-group">
-        <label>Scrolls (Random)</label><input type="number" id="scrolls" value="0" />
-      </div>
-      <div class="input-group">
-        <label>Offer Price (€)</label><input type="number" id="price" step="0.01" value="0" />
-      </div>
-      <button type="submit">Calculate</button>
-    </form>
+    <div id="item-list"></div>
+    <button id="add-item">+ Add Item</button>
+
+    <div class="price-section">
+      <label for="offer-price">Offer Price (€):</label>
+      <input type="number" id="offer-price" step="0.01" value="0" />
+      <button id="evaluate-offer">Evaluate Offer</button>
+    </div>
+
     <div id="result" class="result-box"></div>
   </div>
+
+  <template id="item-row-template">
+    <div class="item-row">
+      <select class="item-select"></select>
+      <input type="number" class="item-qty" value="0" />
+      <div class="item-total">€0.00</div>
+    </div>
+  </template>
+
   <script src="config.js"></script>
   <script src="script.js"></script>
 </body>
