@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Archero 2 Offer Calculator</title>
-  <link rel="stylesheet" href="style.css">
   <style>
     body {
       margin: 0;
@@ -71,6 +70,7 @@
     .verdict.good { color: yellow; }
     .verdict.amazing { color: limegreen; }
     .verdict.bad { color: red; }
+    .verdict.meh { color: orange; }
   </style>
 </head>
 <body>
@@ -165,6 +165,7 @@
       }
 
       const ratio = totalValue / offerPrice;
+      const percent = (ratio * 100).toFixed(0);
       let verdictText = '';
       let verdictClass = '';
 
@@ -184,7 +185,7 @@
 
       document.getElementById('result').innerHTML = `
         <strong>Total Estimated Value:</strong> ${formatEuro(totalValue)}<br />
-        <strong>Value Ratio:</strong> ${ratio.toFixed(2)}x<br />
+        <strong>Value Ratio:</strong> ${ratio.toFixed(2)}x (${percent}%)<br />
         <strong class="verdict ${verdictClass}">${verdictText}</strong>
       `;
     }
