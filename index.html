@@ -98,25 +98,11 @@
     </div>
   </template>
 
+  <!-- Reference external config -->
+  <script src="config.js"></script>
+
+  <!-- Main app logic -->
   <script>
-    const itemBaseValues = {
-      gems: 0.0111,
-      gold: 0.0000037,
-      scroll_random: 0.0499,
-      hero_rare_shard: 0.97,
-      hero_epic_shard: 5.32,
-      hero_legendary_shard: 4.64
-    };
-
-    const itemIcons = {
-      gems: "💎 Gems",
-      gold: "🪙 Gold",
-      scroll_random: "📜 Random Scroll",
-      hero_rare_shard: "🧝 Rare Hero Shard",
-      hero_epic_shard: "🧙 Epic Hero Shard",
-      hero_legendary_shard: "👑 Legendary Hero Shard"
-    };
-
     const formatEuro = val => `€${val.toFixed(2)}`;
 
     function createItemRow() {
@@ -129,7 +115,7 @@
       for (let key in itemBaseValues) {
         const option = document.createElement('option');
         option.value = key;
-        option.textContent = itemIcons[key];
+        option.textContent = itemIcons[key] || key;
         select.appendChild(option);
       }
 
@@ -159,13 +145,16 @@
       });
 
       const offerPrice = parseFloat(document.getElementById('offer-price').value) || 0;
+      const resultDiv = document.getElementById('result');
+
       if (offerPrice <= 0 || totalValue <= 0) {
-        document.getElementById('result').innerHTML = '<span class="verdict bad">Please enter at least one item and a valid offer price.</span>';
+        resultDiv.innerHTML = '<span class="verdict bad">Please enter at least one item and a valid offer price.</span>';
         return;
       }
 
       const ratio = totalValue / offerPrice;
-      const percent = (ratio * 100).toFixed(0);
+      const percentage = ratio * 100;
+
       let verdictText = '';
       let verdictClass = '';
 
@@ -183,9 +172,9 @@
         verdictClass = 'bad';
       }
 
-      document.getElementById('result').innerHTML = `
+      resultDiv.innerHTML = `
         <strong>Total Estimated Value:</strong> ${formatEuro(totalValue)}<br />
-        <strong>Value Ratio:</strong> ${ratio.toFixed(2)}x (${percent}%)<br />
+        <strong>Value Ratio:</strong> ${ratio.toFixed(2)}x (${percentage.toFixed(0)}%)<br />
         <strong class="verdict ${verdictClass}">${verdictText}</strong>
       `;
     }
