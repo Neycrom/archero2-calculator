@@ -1,10 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Archero 2 Offer Calculator</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background-color: #121212;
+      color: #fff;
+    }
+    .container {
+      max-width: 480px;
+      margin: auto;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .item-row {
+      display: grid;
+      grid-template-columns: 40% 30% 30%;
+      gap: 10px;
+      margin-bottom: 10px;
+      align-items: center;
+    }
+    .item-select, .item-qty {
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      background: #1e1e1e;
+      color: #fff;
+    }
+    .item-total {
+      text-align: right;
+      font-weight: bold;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #03dac5;
+      border: none;
+      color: #000;
+      font-weight: bold;
+      border-radius: 6px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    .price-section {
+      margin-top: 20px;
+    }
+    #offer-price {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      background: #1e1e1e;
+      color: #fff;
+      border: none;
+    }
+    .result-box {
+      margin-top: 20px;
+      padding: 15px;
+      background: #1f1f1f;
+      border-radius: 8px;
+    }
+    .verdict.good { color: yellow; }
+    .verdict.amazing { color: limegreen; }
+    .verdict.bad { color: red; }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -14,7 +81,7 @@
 
     <div class="price-section">
       <label for="offer-price">Offer Price (€):</label>
-      <input type="number" id="offer-price" step="0.01" value="0" />
+      <input type="number" id="offer-price" step="0.01" placeholder="Enter price" />
       <button id="evaluate-offer">Evaluate Offer</button>
     </div>
 
@@ -23,13 +90,109 @@
 
   <template id="item-row-template">
     <div class="item-row">
-      <select class="item-select"></select>
-      <input type="number" class="item-qty" value="0" />
+      <select class="item-select">
+        <option disabled selected>Select an item</option>
+      </select>
+      <input type="number" class="item-qty" min="0" placeholder="0" />
       <div class="item-total">€0.00</div>
     </div>
   </template>
 
-  <script src="config.js"></script>
-  <script src="script.js"></script>
+  <script>
+    const itemBaseValues = {
+      gems: 0.0111,
+      gold: 0.0000037,
+      scroll_random: 0.0499,
+      hero_rare_shard: 0.97,
+      hero_epic_shard: 5.32,
+      hero_legendary_shard: 4.64
+    };
+
+    const itemIcons = {
+      gems: "💎 Gems",
+      gold: "🪙 Gold",
+      scroll_random: "📜 Random Scroll",
+      hero_rare_shard: "🧝 Rare Hero Shard",
+      hero_epic_shard: "🧙 Epic Hero Shard",
+      hero_legendary_shard: "👑 Legendary Hero Shard"
+    };
+
+    const formatEuro = val => `€${val.toFixed(2)}`;
+
+    function createItemRow() {
+      const template = document.getElementById('item-row-template');
+      const clone = template.content.cloneNode(true);
+      const select = clone.querySelector('.item-select');
+      const qtyInput = clone.querySelector('.item-qty');
+      const totalDiv = clone.querySelector('.item-total');
+
+      for (let key in itemBaseValues) {
+        const option = document.createElement('option');
+        option.value = key;
+        option.textContent = itemIcons[key];
+        select.appendChild(option);
+      }
+
+      function updateTotal() {
+        const qty = parseFloat(qtyInput.value) || 0;
+        const val = itemBaseValues[select.value] || 0;
+        const total = qty * val;
+        totalDiv.textContent = formatEuro(total);
+      }
+
+      select.addEventListener('change', updateTotal);
+      qtyInput.addEventListener('input', updateTotal);
+      updateTotal();
+
+      document.getElementById('item-list').appendChild(clone);
+    }
+
+    function evaluateOffer() {
+      const rows = document.querySelectorAll('.item-row');
+      let totalValue = 0;
+
+      rows.forEach(row => {
+        const select = row.querySelector('.item-select');
+        const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
+        const unit = itemBaseValues[select.value] || 0;
+        totalValue += qty * unit;
+      });
+
+      const offerPrice = parseFloat(document.getElementById('offer-price').value) || 0;
+      if (offerPrice <= 0 || totalValue <= 0) {
+        document.getElementById('result').innerHTML = '<span class="verdict bad">Please enter at least one item and a valid offer price.</span>';
+        return;
+      }
+
+      const ratio = totalValue / offerPrice;
+      let verdictText = '';
+      let verdictClass = '';
+
+      if (ratio >= 2.5) {
+        verdictText = 'Amazing Deal!';
+        verdictClass = 'amazing';
+      } else if (ratio >= 1.5) {
+        verdictText = 'Good Deal';
+        verdictClass = 'good';
+      } else if (ratio >= 1.0) {
+        verdictText = 'Meh';
+        verdictClass = 'meh';
+      } else {
+        verdictText = 'Bad Deal';
+        verdictClass = 'bad';
+      }
+
+      document.getElementById('result').innerHTML = `
+        <strong>Total Estimated Value:</strong> ${formatEuro(totalValue)}<br />
+        <strong>Value Ratio:</strong> ${ratio.toFixed(2)}x<br />
+        <strong class="verdict ${verdictClass}">${verdictText}</strong>
+      `;
+    }
+
+    document.getElementById('add-item').addEventListener('click', createItemRow);
+    document.getElementById('evaluate-offer').addEventListener('click', evaluateOffer);
+
+    window.onload = () => createItemRow();
+  </script>
 </body>
 </html>
