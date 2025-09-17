@@ -19,23 +19,23 @@ const itemBaseValues = {
 };
 
 const itemIcons = {
-  gems: "💎 Gems",
-  gold: "🪙 Gold",
-  scroll_random: "📜 Random Scroll",
-  scroll_weapon: "⚔️ Weapon Scroll",
-  scroll_helmet: "🪖 Helmet Scroll",
-  scroll_amulet: "📿 Amulet Scroll",
-  scroll_armor: "🛡️ Armor Scroll",
-  scroll_boots: "🥾 Boots Scroll",
-  scroll_ring: "💍 Ring Scroll",
-  key_silver: "🔑 Silver Key",
-  key_obsidian: "🗝️ Obsidian Key",
-  key_chromatic: "🌈 Chromatic Key",
-  wish_coin: "🧞 Wish Coin",
-  ticket: "🎟️ Ticket",
-  hero_rare_shard: "🧝 Rare Hero Shard",
-  hero_epic_shard: "🧙 Epic Hero Shard",
-  hero_legendary_shard: "👑 Legendary Hero Shard"
+  gems: "Gems",
+  gold: "Gold",
+  scroll_random: "Random Scroll",
+  scroll_weapon: "Weapon Scroll",
+  scroll_helmet: "Helmet Scroll",
+  scroll_amulet: "Amulet Scroll",
+  scroll_armor: "Armor Scroll",
+  scroll_boots: "Boots Scroll",
+  scroll_ring: "Ring Scroll",
+  key_silver: "Silver Key",
+  key_obsidian: "Obsidian Key",
+  key_chromatic: "Chromatic Key",
+  wish_coin: "Wish Coin",
+  ticket: "Ticket",
+  hero_rare_shard: "Rare Hero Shard",
+  hero_epic_shard: "Epic Hero Shard",
+  hero_legendary_shard: "Legendary Hero Shard"
 };
 
 const itemImages = {
