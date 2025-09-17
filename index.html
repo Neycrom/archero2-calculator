@@ -21,15 +21,17 @@
     <div id="result" class="result-box"></div>
   </div>
 
-  <template id="item-row-template">
-    <div class="item-row">
-      <select class="item-select">
-        <option disabled selected>Select an item</option>
-      </select>
-      <input type="number" class="item-qty" min="0" placeholder="0" />
-      <div class="item-total">€0.00</div>
+<template id="item-row-template">
+  <div class="item-row">
+    <div class="custom-select" data-selected="">
+      <div class="selected-option">Select an item</div>
+      <div class="dropdown-list"></div>
     </div>
-  </template>
+    <input type="number" class="item-qty" min="0" placeholder="0" />
+    <div class="item-total">€0.00</div>
+  </div>
+</template>
+
 
   <script src="config.js"></script>
   <script src="main.js"></script>
