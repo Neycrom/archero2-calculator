@@ -18,39 +18,74 @@ const itemBaseValues = {
   hero_legendary_shard: 4.64
 };
 
-const itemIcons = {
-  gems: "Gems",
-  gold: "Gold",
-  scroll_random: "Random Scroll",
-  scroll_weapon: "Weapon Scroll",
-  scroll_helmet: "Helmet Scroll",
-  scroll_amulet: "Amulet Scroll",
-  scroll_armor: "Armor Scroll",
-  scroll_boots: "Boots Scroll",
-  scroll_ring: "Ring Scroll",
-  key_silver: "Silver Key",
-  key_obsidian: "Obsidian Key",
-  key_chromatic: "Chromatic Key",
-  wish_coin: "Wish Coin",
-  ticket: "Ticket",
-  hero_rare_shard: "Rare Hero Shard",
-  hero_epic_shard: "Epic Hero Shard",
-  hero_legendary_shard: "Legendary Hero Shard"
+const itemData = {
+  gems: {
+    label: "Gems",
+    icon: "assets/icons/currency_Diamond.png"
+  },
+  gold: {
+    label: "Gold",
+    icon: "assets/icons/currencyGold_0.png"
+  },
+  scroll_random: {
+    label: "Random Scroll",
+    icon: "assets/icons/Currency_EquipAny.png"
+  },
+  scroll_weapon: {
+    label: "Weapon Scroll",
+    icon: "assets/icons/Currency_Equip5.png"
+  },
+  scroll_helmet: {
+    label: "Helmet Scroll",
+    icon: "assets/icons/Currency_Equip1.png"
+  },
+  scroll_amulet: {
+    label: "Amulet Scroll",
+    icon: "assets/icons/Currency_Equip2.png"
+  },
+  scroll_armor: {
+    label: "Armor Scroll",
+    icon: "assets/icons/Currency_Equip3.png"
+  },
+  scroll_boots: {
+    label: "Boots Scroll",
+    icon: "assets/icons/Currency_Equip4.png"
+  },
+  scroll_ring: {
+    label: "Ring Scroll",
+    icon: "assets/icons/Currency_Equip6.png"
+  },
+  key_silver: {
+    label: "Silver Key",
+    icon: "assets/icons/keyNormal_0.png"
+  },
+  key_obsidian: {
+    label: "Obsidian Key",
+    icon: "assets/icons/keyUp_0.png"
+  },
+  key_chromatic: {
+    label: "Chromatic Key",
+    icon: "assets/icons/keyHuanCai_0.png"
+  },
+  wish_coin: {
+    label: "Wish Coin",
+    icon: "assets/icons/keyQiYuan_0.png"
+  },
+  ticket: {
+    label: "Ticket",
+    icon: "assets/icons/icon_ticket_cave.png"
+  },
+  hero_rare_shard: {
+    label: "Rare Hero Shard",
+    icon: "assets/icons/shard_rare.png"
+  },
+  hero_epic_shard: {
+    label: "Epic Hero Shard",
+    icon: "assets/icons/shard_epic.png"
+  },
+  hero_legendary_shard: {
+    label: "Legendary Hero Shard",
+    icon: "assets/icons/shard_legendary.png"
+  }
 };
 
-const itemImages = {
-  gems: "currency_Diamond.png",
-  gold: "currencyGold_0.png",
-  scroll_random: "Currency_EquipAny.png",
-  scroll_weapon: "Currency_Equip5.png",
-  scroll_helmet: "Currency_Equip1.png",
-  scroll_amulet: "Currency_Equip2.png",
-  scroll_armor: "Currency_Equip3.png",
-  scroll_boots: "Currency_Equip4.png",
-  scroll_ring: "Currency_Equip6.png",
-  key_silver: "keyNormal_0.png",
-  key_obsidian: "keyUp_0.png",
-  key_chromatic: "keyHuanCai_0.png",
-  wish_coin: "keyQiYuan_0.png",
-  ticket: "icon_ticket_cave.png"
-};
