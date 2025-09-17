@@ -10,7 +10,6 @@ function createItemRow() {
   const qtyInput = row.querySelector('.item-qty');
   const totalDiv = row.querySelector('.item-total');
 
-  // Populate dropdown with items
   for (const key in itemBaseValues) {
     const itemDiv = document.createElement('div');
     const icon = document.createElement('img');
@@ -23,7 +22,7 @@ function createItemRow() {
 
     itemDiv.addEventListener('click', () => {
       customSelect.dataset.selected = key;
-      selectedOption.innerHTML = ''; // Clear previous
+      selectedOption.innerHTML = '';
       selectedOption.appendChild(icon.cloneNode());
       selectedOption.appendChild(document.createTextNode(' ' + (itemIcons[key] || key)));
       dropdownList.style.display = 'none';
@@ -45,7 +44,6 @@ function createItemRow() {
   }
 
   qtyInput.addEventListener('input', updateTotal);
-
   document.getElementById('item-list').appendChild(clone);
 }
 
