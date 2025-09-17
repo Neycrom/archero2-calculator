@@ -27,31 +27,28 @@ const itemBaseValues = {
   hero_legendary_shard: 4.64
 };
 
-const itemIcons = {
+const itemImagePaths = {
   // Core currencies
-  gems: "💎 Gems",
-  gold: "🪙 Gold",
+  gems: "currency_Diamond.png",
+  gold: "currencyGold_0.png",
 
   // Scrolls
-  scroll_random: "📜 Random Scroll",
-  scroll_weapon: "⚔️ Weapon Scroll",
-  scroll_helmet: "🪖 Helmet Scroll",
-  scroll_armor: "🛡️ Armor Scroll",
-  scroll_ring: "💍 Ring Scroll",
-  scroll_amulet: "📿 Amulet Scroll",
-  scroll_boots: "🥾 Boots Scroll",
+  scroll_random: "Currency_EquipAny.png",
+  scroll_weapon: "Currency_Equip5.png",
+  scroll_helmet: "Currency_Equip1.png",
+  scroll_amulet: "Currency_Equip2.png",
+  scroll_armor: "Currency_Equip3.png",
+  scroll_boots: "Currency_Equip4.png",
+  scroll_ring: "Currency_Equip6.png",
 
   // Keys
-  key_silver: "🔑 Silver Key",
-  key_obsidian: "🗝️ Obsidian Key",
-  key_chromatic: "🌈 Chromatic Key",
+  key_silver: "keyNormal_0.png",
+  key_obsidian: "keyUp_0.png",
+  key_chromatic: "keyHuanCai_0.png",
 
   // Wish Coin
-  wish_coin: "🧞 Wish Coin",
+  wish_coin: "keyQiYuan_0.png",
 
-  // Tickets and Hero Shards
-  ticket: "🎟️ Ticket",
-  hero_rare_shard: "🧝 Rare Hero Shard",
-  hero_epic_shard: "🧙 Epic Hero Shard",
-  hero_legendary_shard: "👑 Legendary Hero Shard"
+  // Tickets
+  ticket: "icon_ticket_cave.png"
 };
