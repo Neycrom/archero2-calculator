@@ -3,97 +3,61 @@ const formatEuro = val => `€${val.toFixed(2)}`;
 function createItemRow() {
   const template = document.getElementById('item-row-template');
   const clone = template.content.cloneNode(true);
-  const row = clone.querySelector('.item-row');
-  const customSelect = row.querySelector('.custom-select');
-  const selectedOption = customSelect.querySelector('.selected-option');
-  const dropdownList = customSelect.querySelector('.dropdown-list');
-  const qtyInput = row.querySelector('.item-qty');
-  const totalDiv = row.querySelector('.item-total');
+  const dropdown = clone.querySelector('.custom-select');
+  const selectedOption = dropdown.querySelector('.selected-option');
+  const dropdownList = dropdown.querySelector('.dropdown-list');
+  const qtyInput = clone.querySelector('.item-qty');
+  const totalDiv = clone.querySelector('.item-total');
 
-  for (const key in itemBaseValues) {
-    const itemDiv = document.createElement('div');
-    const icon = document.createElement('img');
-    icon.src = `assets/icons/${itemImages[key]}`;
-    const label = document.createElement('span');
-    label.textContent = itemIcons[key] || key;
-    itemDiv.appendChild(icon);
-    itemDiv.appendChild(label);
-    itemDiv.dataset.value = key;
+  // Populate dropdown
+  for (let key in itemData) {
+    const item = itemData[key];
 
-    itemDiv.addEventListener('click', () => {
-      customSelect.dataset.selected = key;
-      selectedOption.innerHTML = '';
-      selectedOption.appendChild(icon.cloneNode());
-      selectedOption.appendChild(document.createTextNode(' ' + (itemIcons[key] || key)));
-      dropdownList.style.display = 'none';
-      updateTotal();
-    });
+    const option = document.createElement("div");
+    option.dataset.value = key;
 
-    dropdownList.appendChild(itemDiv);
+    const img = document.createElement("img");
+    img.src = item.icon;
+    img.alt = item.label;
+
+    const label = document.createElement("span");
+    label.textContent = item.label;
+
+    option.appendChild(img);
+    option.appendChild(label);
+    dropdownList.appendChild(option);
   }
 
-  customSelect.addEventListener('click', () => {
-    dropdownList.style.display = dropdownList.style.display === 'block' ? 'none' : 'block';
+  // Open/close logic
+  dropdown.addEventListener("click", () => {
+    dropdownList.style.display = dropdownList.style.display === "block" ? "none" : "block";
+  });
+
+  // Handle item selection
+  dropdownList.querySelectorAll("div").forEach(option => {
+    option.addEventListener("click", () => {
+      const value = option.dataset.value;
+      dropdown.dataset.selected = value;
+      dropdownList.style.display = "none";
+
+      // Update selected item icon + label
+      const img = document.createElement("img");
+      img.src = itemData[value].icon;
+      img.alt = itemData[value].label;
+
+      const span = document.createElement("span");
+      span.textContent = itemData[value].label;
+
+      selectedOption.innerHTML = "";
+      selectedOption.appendChild(img);
+      selectedOption.appendChild(span);
+
+      updateTotal();
+    });
   });
 
   function updateTotal() {
-    const key = customSelect.dataset.selected;
+    const selected = dropdown.dataset.selected;
     const qty = parseFloat(qtyInput.value) || 0;
-    const unitPrice = itemBaseValues[key] || 0;
-    totalDiv.textContent = formatEuro(qty * unitPrice);
-  }
-
-  qtyInput.addEventListener('input', updateTotal);
-  document.getElementById('item-list').appendChild(clone);
-}
-
-function evaluateOffer() {
-  const rows = document.querySelectorAll('.item-row');
-  let totalValue = 0;
-
-  rows.forEach(row => {
-    const select = row.querySelector('.custom-select');
-    const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
-    const key = select.dataset.selected;
-    const unit = itemBaseValues[key] || 0;
-    totalValue += qty * unit;
-  });
-
-  const offerPrice = parseFloat(document.getElementById('offer-price').value) || 0;
-  const resultDiv = document.getElementById('result');
-
-  if (offerPrice <= 0 || totalValue <= 0) {
-    resultDiv.innerHTML = '<span class="verdict bad">Please enter at least one item and a valid offer price.</span>';
-    return;
-  }
-
-  const ratio = totalValue / offerPrice;
-  const percentage = ratio * 100;
-
-  let verdictText = '';
-  let verdictClass = '';
-
-  if (ratio >= 2.5) {
-    verdictText = 'Amazing Deal!';
-    verdictClass = 'amazing';
-  } else if (ratio >= 1.5) {
-    verdictText = 'Good Deal';
-    verdictClass = 'good';
-  } else if (ratio >= 1.0) {
-    verdictText = 'Meh';
-    verdictClass = 'meh';
-  } else {
-    verdictText = 'Bad Deal';
-    verdictClass = 'bad';
-  }
-
-  resultDiv.innerHTML = `
-    <strong>Total Estimated Value:</strong> ${formatEuro(totalValue)}<br />
-    <strong>Value Ratio:</strong> ${ratio.toFixed(2)}x (${percentage.toFixed(0)}%)<br />
-    <strong class="verdict ${verdictClass}">${verdictText}</strong>
-  `;
-}
-
-document.getElementById('add-item').addEventListener('click', createItemRow);
-document.getElementById('evaluate-offer').addEventListener('click', evaluateOffer);
-window.onload = () => createItemRow();
+    const unitValue = itemBaseValues[selected] || 0;
+    totalDiv.textContent = formatEuro(qty
