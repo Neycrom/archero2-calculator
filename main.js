@@ -3,73 +3,60 @@ const formatEuro = val => `€${val.toFixed(2)}`;
 function createItemRow() {
   const template = document.getElementById('item-row-template');
   const clone = template.content.cloneNode(true);
-  const customSelect = clone.querySelector('.custom-select');
+  const row = clone.querySelector('.item-row');
+  const customSelect = row.querySelector('.custom-select');
   const selectedOption = customSelect.querySelector('.selected-option');
-  const dropdown = customSelect.querySelector('.dropdown-list');
-  const qtyInput = clone.querySelector('.item-qty');
-  const totalDiv = clone.querySelector('.item-total');
+  const dropdownList = customSelect.querySelector('.dropdown-list');
+  const qtyInput = row.querySelector('.item-qty');
+  const totalDiv = row.querySelector('.item-total');
 
-  // Populate dropdown list
-  for (let key in itemBaseValues) {
-    const item = document.createElement('div');
-    item.setAttribute('data-key', key);
-    item.innerHTML = `
-      <img src="assets/icons/${itemImagePaths[key]}" alt="${key}" />
-      <span>${itemIcons[key]}</span>
-    `;
-    dropdown.appendChild(item);
+  // Populate dropdown with items
+  for (const key in itemBaseValues) {
+    const itemDiv = document.createElement('div');
+    const icon = document.createElement('img');
+    icon.src = `assets/icons/${itemImages[key]}`;
+    const label = document.createElement('span');
+    label.textContent = itemIcons[key] || key;
+    itemDiv.appendChild(icon);
+    itemDiv.appendChild(label);
+    itemDiv.dataset.value = key;
+
+    itemDiv.addEventListener('click', () => {
+      customSelect.dataset.selected = key;
+      selectedOption.innerHTML = ''; // Clear previous
+      selectedOption.appendChild(icon.cloneNode());
+      selectedOption.appendChild(document.createTextNode(' ' + (itemIcons[key] || key)));
+      dropdownList.style.display = 'none';
+      updateTotal();
+    });
+
+    dropdownList.appendChild(itemDiv);
   }
 
-  // Toggle dropdown visibility
-  customSelect.addEventListener('click', (e) => {
-    if (e.target.closest('.dropdown-list')) return; // let selection work
-    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-  });
-
-  // Handle selection
-  dropdown.addEventListener('click', (e) => {
-    const selectedDiv = e.target.closest('div[data-key]');
-    if (!selectedDiv) return;
-
-    const key = selectedDiv.getAttribute('data-key');
-    const icon = itemImagePaths[key];
-    const label = itemIcons[key];
-
-    selectedOption.innerHTML = `<img src="assets/icons/${icon}" alt="${key}" /><span>${label}</span>`;
-    customSelect.setAttribute('data-selected', key);
-    dropdown.style.display = 'none';
-    updateTotal();
+  customSelect.addEventListener('click', () => {
+    dropdownList.style.display = dropdownList.style.display === 'block' ? 'none' : 'block';
   });
 
   function updateTotal() {
-    const key = customSelect.getAttribute('data-selected');
+    const key = customSelect.dataset.selected;
     const qty = parseFloat(qtyInput.value) || 0;
-    const val = itemBaseValues[key] || 0;
-    const total = qty * val;
-    totalDiv.textContent = formatEuro(total);
+    const unitPrice = itemBaseValues[key] || 0;
+    totalDiv.textContent = formatEuro(qty * unitPrice);
   }
 
   qtyInput.addEventListener('input', updateTotal);
+
   document.getElementById('item-list').appendChild(clone);
 }
-
-// Close dropdown if clicked outside
-window.addEventListener('click', (e) => {
-  document.querySelectorAll('.dropdown-list').forEach(dropdown => {
-    if (!dropdown.parentElement.contains(e.target)) {
-      dropdown.style.display = 'none';
-    }
-  });
-});
 
 function evaluateOffer() {
   const rows = document.querySelectorAll('.item-row');
   let totalValue = 0;
 
   rows.forEach(row => {
-    const customSelect = row.querySelector('.custom-select');
+    const select = row.querySelector('.custom-select');
     const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
-    const key = customSelect.getAttribute('data-selected');
+    const key = select.dataset.selected;
     const unit = itemBaseValues[key] || 0;
     totalValue += qty * unit;
   });
