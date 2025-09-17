@@ -27,12 +27,9 @@ const itemBaseValues = {
   hero_legendary_shard: 4.64
 };
 
-const itemImagePaths = {
-  // Core currencies
+const itemImages = {
   gems: "currency_Diamond.png",
   gold: "currencyGold_0.png",
-
-  // Scrolls
   scroll_random: "Currency_EquipAny.png",
   scroll_weapon: "Currency_Equip5.png",
   scroll_helmet: "Currency_Equip1.png",
@@ -40,15 +37,9 @@ const itemImagePaths = {
   scroll_armor: "Currency_Equip3.png",
   scroll_boots: "Currency_Equip4.png",
   scroll_ring: "Currency_Equip6.png",
-
-  // Keys
   key_silver: "keyNormal_0.png",
   key_obsidian: "keyUp_0.png",
   key_chromatic: "keyHuanCai_0.png",
-
-  // Wish Coin
   wish_coin: "keyQiYuan_0.png",
-
-  // Tickets
   ticket: "icon_ticket_cave.png"
 };
